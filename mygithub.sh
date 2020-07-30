@@ -4,9 +4,10 @@
 #adicionado tag :  mygithub.sh ssh
 
 
+up=`shuf -i 1-19 -n 1`
+m=`shuf -i 1-9 -n 1`
 
 echo "Init `git init`"
-echo "Add README `git add README.md`"
 for i in $*
 do
 if [ "$i" = "${1}" ]; then
@@ -15,7 +16,8 @@ else
     echo "Append file `git add ${i}`"
 fi
 done
+echo "Tag" `git tag -a 1.${m}.${up} -m "modified"`
+echo "Marked `git commit -am "dev"`"
 
-echo "Marked `git commit -m "dev"`"
+echo "Up `git push -u origin master --tags`"
 
-echo "Up `git push -u origin master`"
