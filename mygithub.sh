@@ -1,6 +1,7 @@
 #! /bin/bash -x
 # mygithub.sh ssh file ou subirprojeto ssh [file...]
 #simples script auxiliar
+#adicionado tag :  mygithub.sh ssh
 
 
 
