@@ -3,6 +3,7 @@
 #simples script auxiliar
 
 
+
 echo "Init `git init`"
 echo "Add README `git add README.md`"
 for i in $*
@@ -17,4 +18,3 @@ done
 echo "Marked `git commit -m "dev"`"
 
 echo "Up `git push -u origin master`"
-
