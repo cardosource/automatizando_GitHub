@@ -1,4 +1,5 @@
- 📌️ Script auxiliar o upload de códigos para repositorio github.
+
+# Automatizando GitHub
 
 Para um aproveito melhor crie em link
 
