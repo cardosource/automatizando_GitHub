@@ -1,23 +1,20 @@
-#! /bin/bash -x
-# mygithub.sh ssh file ou subirprojeto ssh [file...]
-#simples script auxiliar
+#! /bin/bash 
 
-up=`shuf -i 1-19 -n 1`
-m=`shuf -i 1-9 -n 1`
+ gitinit=`git init`
 
-echo "Init `git init`"
-for i in $*
-do
-if [ "$i" = "${1}" ]; then
-    echo ">>> Local/Remoto `git remote add origin ${i}`"
-else
-    echo "+++ Append file `git add ${i}`"
+if [[ "$gitinit" == *"Initialized"* ]];
+ then
+  echo "git iniciado"
+  else
+  
+   echo -e "O git foi iniciado  anteriormente,\nnão foi possivel iniciar 2 vezes no mesmo diretorio\n"
+   echo -e "Pode remover o git e reiniciar um novo :  <sim> " 
+     read -p "(ou pressione a tecla Enter para continuar... ) " removergit 
+       if [[ $removergit == "sim" ]];
+        then
+          rm -rf .git
+          echo "[ git del  ] - removido"
+          echo "[ novo git ] - iniciado"
+          git init > /dev/null
+      fi
 fi
-done
-
-echo "*** Marked `git commit -am "dev"`"
-
-echo " ^^^ Up `git push -u origin master`"
-
-echo "<<>> Tag" `git tag -a 1.${m}.${up} -m "modified"`
-echo "..^.. Up `git push -u origin master --tags`"
