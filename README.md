@@ -1,7 +1,7 @@
 
 # Automatizando GitHub
 
-Para um aproveito melhor crie em link
+Para um aproveito melhor e mais agilidade no processo de carregar arquivo no github o atual código dispoem de instruçẽs para diminuir o tempo em digitação de comandos ao git.
 
 
 sudo ln mygithub.sh /usr/local/bin/subirprojeto
