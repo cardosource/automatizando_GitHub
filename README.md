@@ -1,7 +1,7 @@
 
 # Automatizando GitHub
 
-Para um aproveito melhor e mais agilidade no processo de carregar arquivo no github o atual código dispoem de instruçẽs para diminuir o tempo em digitação de comandos ao git.        
+Para um aproveito melhor e mais agilidade no processo de carregar arquivo em um repositorio no github o atual código dispoem de instruçẽs para diminuir o tempo em digitação de comandos ao git.        
 O upload de arquivos automatizado para o github é feito por instruções pré definidas no respositorio atual.
 
 sudo ln mygithub.sh /usr/local/bin/subirprojeto
