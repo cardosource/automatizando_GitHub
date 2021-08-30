@@ -6,7 +6,7 @@ A automatização de upload de arquivos  para o repositorio no github é feito p
 
 
 
-instruções de cnfiguração sistemas core linux
+instruções de configuração sistemas core linux
 ```bash
 
 
