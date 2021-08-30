@@ -8,11 +8,12 @@ A automatização de upload de arquivos  para o repositorio no github é feito p
 
 instruções de configuração sistemas core linux
 ```bash
-
-
-  sudo ln mygithub.sh /usr/local/bin/subirprojeto
+  sudo ln mygithub.sh /usr/local/bin/subirprojeto  
   
-  ls -l /usr/local/bin/
+```
+
+```bash  
+  ls -l /usr/local/bin/  
   
 ```
 
