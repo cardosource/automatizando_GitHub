@@ -20,5 +20,5 @@ instruções de configuração sistemas core linux
   
 
 
- ![GitHub](https://img.shields.io/badge/shellscrip-linux-blue)
+ ![GitHub](https://img.shields.io/badge/shellscript-linux-blue)
 
