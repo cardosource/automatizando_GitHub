@@ -22,3 +22,9 @@ fi
 
 arquivos=`git status | grep   '[[:alpha:]]\.py\|\.c\|\.sh\|\.java\|\.md\|\.txt|\.cpp'`
 gitignore=`git status | grep    '[\.]gitignore'`
+
+
+adicionarArquivo(){
+# A implementar
+   
+   }
