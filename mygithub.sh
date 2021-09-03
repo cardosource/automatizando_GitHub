@@ -28,3 +28,15 @@ adicionarArquivo(){
 # A implementar
    
    }
+license(){
+
+  case $1 in
+   1 ) touch mit ;;
+   
+   2 ) touch gpl;;
+   
+   3 ) touch apache;;
+   
+   esac
+   
+   }
