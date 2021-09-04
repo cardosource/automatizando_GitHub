@@ -87,7 +87,11 @@ function iniciandoTrabalhos(){
  
  function arquivosPendentes(){
   
-
+for  indice in  $arquivos
+    do
+    novo=`git status | grep   $indice| cut -c 12-50`
+  
+done
    
 
 }
