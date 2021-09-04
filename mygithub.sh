@@ -90,7 +90,32 @@ function iniciandoTrabalhos(){
 for  indice in  $arquivos
     do
     novo=`git status | grep   $indice| cut -c 12-50`
+      
+    
+    if  test "$indice" = "new"
+     then
+     
+      quantidade_arquivos_novos=`git status | grep   $indice | cut -c 2-4 | wc -l`
+       echo -e "\n[ ATENÇÃO ] - Há  $quantidade_arquivos_novos  esperando continuidade são eles:"
+       echo "$novo"
+     echo "resetar ou continuar [y/n]"
+     
+     read resetar
+      if  test "$resetar" = "y" 
+        then
+         git reset --hard
+        # git restore --staged $novo
+         #git  rm --cached $novo
+        # git rm --force  $novo
+         
+        echo "[ REMOVIDOS ] - Arquivos removidos : $novo" 
+      else
+        adicionarArquivo "$indice"
+      
+   fi
+  break
   
+  fi
 done
    
 
