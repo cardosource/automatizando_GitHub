@@ -84,3 +84,10 @@ function iniciandoTrabalhos(){
   done
          
  }
+ 
+ function arquivosPendentes(){
+  
+
+   
+
+}
