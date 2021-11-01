@@ -1,8 +1,5 @@
 #! /bin/bash 
-
-#CRIAR REPOSITORIO
-TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+export TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 function repositorio_github(){
           echo "  |_ . Escolha o melhor nome :)"
           read -p "Por gentileza escreva o nome que dara ao novo repositorio  : " NOME_PROJETO 
@@ -25,14 +22,18 @@ if [[ "$gitinit" == *"Initialized"* ]];
   echo "git iniciado"
   else
   
-   echo -e "O git foi iniciado  anteriormente,\nnão foi possivel iniciar 2 vezes no mesmo diretorio\n"
-   echo -e "Pode remover o git e reiniciar um novo :  <sim> " 
-     read -p "(ou pressione a tecla Enter para continuar... ) " removergit 
+   echo -e "[ GIT ] - Sistema de controle de versão\n|_ .O git havia sido iniciado anteriormente.\n" \
+   "  |_ . não é possivel iniciar 2 vezes no mesmo diretorio"
+   echo -e "\t Vamos remover o git e reiniciar um novo :\n "\
+         "\t\t 'sim'  ou pressione 'ENTER' para continuar..." 
+     read  removergit 
        if [[ $removergit == "sim" ]];
         then
           rm -rf .git
-          echo "[ git del  ] - removido"
-          echo "[ novo git ] - iniciado"
+          echo -e "\n|_ .Removido \n " \
+          " |_ . iniciado git" 
+          git init > /dev/null
+          echo -e "\n"
       fi
 fi
 
@@ -40,11 +41,19 @@ fi
 arquivos=`git status | grep   '[[:alpha:]]\.py\|\.c\|\.sh\|\.java\|\.md\|\.txt|\.cpp'`
 gitignore=`git status | grep    '[\.]gitignore'`
 
-
 adicionarArquivo(){
-# A implementar
+#    read -p "[ COMENTARIO ] - Adicionar um comentario : " comentario 
+    add=$1
+    #echo "adicionado $1"
+  
+    #git commit -m $comentario
+    #git branch -M main
+  #  read -p "Url repositories : "  remote
+  #  git remote add origin $remote
+   # git push -u origin main
    
    }
+   
 license(){
 
   case $1 in
@@ -52,16 +61,16 @@ license(){
    
    2 ) touch gpl;;
    
-   3 ) touch apache;;
+   2 ) touch apache;;
    
    esac
    
    }
+   
 
 function iniciandoTrabalhos(){
    echo -e "\n"
-  echo -e "Deseja usar alguma licença de uso de software : "
-  read -p "[ LICENSE    ] - Adicionar LICENSE sim/nao  " adicionarlicense  
+  read -p "|_. Adicionar LICENSE sim/nao : " adicionarlicense  
   if [[ $adicionarlicense == "sim" ]];
       then
          echo -e  "1 - MIT\n2 - GPL v3\n3 - Apache 2.0"
@@ -79,9 +88,8 @@ function iniciandoTrabalhos(){
    
    
    else
-     echo -e "\n-Não foi encontrado  um .gitignore  não deseja ser adicionada.\n
-              lembro que ao "
-     read -p "[ GITIGNORE  ] sim ou nao " adicionargitignore
+      echo -e "\n"
+     read -p "|_ . Usar gitignore: sim ou nao " adicionargitignore
      if [[ $adicionargitignore == "sim" ]];
       then
           echo "criado"
@@ -90,41 +98,46 @@ function iniciandoTrabalhos(){
       fi
    
    fi
+   echo -e "\n"
   for  indice in  $arquivos
   do
    adicionarArquivo "$indice"  
    #adicionarArquivo primeira chamada
-   echo "[ ADICIONADO ] - Arquivo :  $indice"
-   
+   echo -e "|_ .Adicionado - Arquivo :  $indice"
+   git add $indice
    
 
   done
          
  }
  
- function arquivosPendentes(){
+ 
+ 
+function arquivosPendentes(){
   
-for  indice in  $arquivos
+
+   for  indice in  $arquivos
     do
     novo=`git status | grep   $indice| cut -c 12-50`
-      
+    
     
     if  test "$indice" = "new"
      then
      
       quantidade_arquivos_novos=`git status | grep   $indice | cut -c 2-4 | wc -l`
-       echo -e "\n[ ATENÇÃO ] - Há  $quantidade_arquivos_novos  esperando continuidade são eles:"
-       echo "$novo"
-     echo "resetar ou continuar [y/n]"
+       echo -e "\n|_. ATENÇÃO nesse local há  $quantidade_arquivos_novos  esperando continuidade são eles:"
+       echo -e "  |\n$novo"
+
+     read -p "|_. Resetar ou continuar sim ou nao :" resetar
      
-     read resetar
-      if  test "$resetar" = "y" 
+      if  test "$resetar" = "sim" 
         then
-         git reset --hard
-        # git restore --staged $novo
-         #git  rm --cached $novo
-        # git rm --force  $novo
+         git restore --staged $novo
+         git  rm --cached $novo
+         git restore $novo
          
+         #read -p "(ou pressione entender para continuar... ) " removergit          
+       #  git rm --force  $novo ##
         echo "[ REMOVIDOS ] - Arquivos removidos : $novo" 
       else
         adicionarArquivo "$indice"
@@ -132,11 +145,11 @@ for  indice in  $arquivos
    fi
   break
   
-  fi
+  fi  
 done
-   
 
 }
+
 
 
 echo "[ GITHUB ] - Criar um novo repositorio no github"
@@ -149,4 +162,3 @@ echo "[ GITHUB ] - Criar um novo repositorio no github"
       iniciandoTrabalhos
 
      fi
-
