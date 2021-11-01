@@ -1,5 +1,25 @@
 #! /bin/bash 
 
+#CRIAR REPOSITORIO
+TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+function repositorio_github(){
+          echo "  |_ . Escolha o melhor nome :)"
+          read -p "Por gentileza escreva o nome que dara ao novo repositorio  : " NOME_PROJETO 
+          read -p "Do repositorio nomeado de ${NOME_PROJETO} faça uma descrição : " DESCRICAO 
+          echo $NOME_PROJETO
+          echo $DESCRICAO
+          curl \
+             --header "Content-type: application/json" \
+             --request POST \
+             -H 'Authorization: token '$TOKEN \
+             -d '{"name":"'$NOME_PROJETO'","description":"'$DESCRICAO'"}'\
+              https://api.github.com/user/repos > /dev/null
+          url="https://github.com/git-cardoso/${NOME_PROJETO}"
+          
+          echo "Esta pronto : ${url}"     
+ }
+
  gitinit=`git init`
 
 if [[ "$gitinit" == *"Initialized"* ]];
@@ -15,7 +35,6 @@ if [[ "$gitinit" == *"Initialized"* ]];
           rm -rf .git
           echo "[ git del  ] - removido"
           echo "[ novo git ] - iniciado"
-          git init > /dev/null
       fi
 fi
 
@@ -121,5 +140,15 @@ done
 
 }
 
-arquivosPendentes
-iniciandoTrabalhos
+
+echo "[ GITHUB ] - Criar um novo repositorio no github"
+     read -p "|_ . <sim> ou <nao>  : " escolha 
+     if [[ $escolha == "sim" ]];
+        then
+        repositorio_github
+    else
+      arquivosPendentes
+      iniciandoTrabalhos
+
+     fi
+
