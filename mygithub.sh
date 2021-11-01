@@ -7,8 +7,6 @@ function repositorio_github(){
           echo "  |_ . Escolha o melhor nome :)"
           read -p "Por gentileza escreva o nome que dara ao novo repositorio  : " NOME_PROJETO 
           read -p "Do repositorio nomeado de ${NOME_PROJETO} faça uma descrição : " DESCRICAO 
-          echo $NOME_PROJETO
-          echo $DESCRICAO
           curl \
              --header "Content-type: application/json" \
              --request POST \
