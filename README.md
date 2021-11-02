@@ -20,5 +20,5 @@ instruções de configuração sistemas core linux
   
 
 
- ![GitHub](https://img.shields.io/badge/shellscript-linux-blue) ![GitHub](https://img.shields.io/badge/licence-GPL%203.0-GREE)
+ ![GitHub](https://img.shields.io/badge/shellscript-bash-blue) ![GitHub](https://img.shields.io/badge/licence-GPL%203.0-GREE)
 
