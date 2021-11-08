@@ -1,10 +1,13 @@
 #! /bin/bash 
+
 export USER_NAME="git-cardoso"
-export TOKEN="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+usuario=$USER 
+
+export TOKEN="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"
 #https://github.com/settings/tokens
 
 
-usuario=$USER 
+
 RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m' 
@@ -21,7 +24,43 @@ ssh-add ~/.ssh/id_rsa
 ssh -T git@github.com
 echo -e "\n"
 
+
+function inicio(){
+
+    init=`git init`
+
+if [[ "$init" == "Initialized"* ]];
+ then
+      arquivos_disponiveis=`git status | grep   '[[:alpha:]]\.py\|\.c\|\.sh\|\.java\|\.md\|\.txt|\.cpp'` 
+     
+    return 0
+else
+   return 1
+  fi
+}
+
+
+
+
+function estado_atual(){
+   
+    inicio
+    if test $? = 0    
+      then
+        echo -e "${RED}${BOLD}[${NBOLD}${NC}  GIT ${RED}${BOLD}]${NBOLD}${NC} "
+        arquivos=`git status | grep   '[[:alpha:]]\.py\|\.c\|\.sh\|\.java\|\.md\|\.txt|\.cpp'`
+        gitignore=`git status | grep    '[\.]gitignore'`
+       iniciandoTrabalhos
+    else
+         echo -e "${RED}${BOLD}[${NBOLD}${NC}  GIT ${RED}${BOLD}]${NBOLD}${NC} "
+         arquivos=`git status | grep   '[[:alpha:]]\.py\|\.c\|\.sh\|\.java\|\.md\|\.txt|\.cpp'`
+         arquivosPendentes        
+    fi
+}
+
+
 function upload(){
+
 git add LICENSE
 echo -e "${RED}|${NC}\n${RED}|_${NC}${BLUE}.${NC} Informação commit : "
 read commits
@@ -32,6 +71,7 @@ git push -u origin main
 
 }
 function existente_repositorio_github(){
+
   echo -e "  ${RED}|_${NC} ${BLUE}.${NC} Escreva o nome do repositorio"
   read  NOME_PROJETO 
   export progeto=${NOME_PROJETO}
@@ -49,63 +89,16 @@ function criar_repositorio_github(){
               -d '{"name":"'"$NOME_PROJETO"'","description":"'"$DESCRICAO"'"}'\
               https://api.github.com/user/repos #> /dev/null
           export progeto=${NOME_PROJETO}
-   
- 
-
               
  }
 
- gitinit=`git init`
-
-if [[ "$gitinit" == *"Initialized"* ]];
- then
-  echo "git iniciado"
-  else
-  
-   echo -e "${RED}[${NC} ${BLUE}GIT${NC} ${RED}]${NC} - Sistema de controle de versão\n${RED}|_${NC} ${BLUE}.${NC} O git havia sido iniciado  anteriormente.\n" \
-   "  ${BLUE}|_ ${NC}${RED}.${NC} não é possivel iniciar 2 vezes no mesmo diretorio"
-   echo -e "\t Vamos remover o git e reiniciar um novo :\n "\
-         "\t\t ${BLUE}'${NC}${BOLD}sim${NBOLD}${BLUE}'${NC}  ou pressione ${BLUE}'${NC}${BOLD}ENTER${NBOLD}${BLUE}'${NC} para continuar..."
-     read  removergit 
-       if [[ $removergit == "sim" ]];
-        then
-          rm -rf .git
-          echo -e "\n${RED}|_${NC} ${BLUE}.${NC} Removido \n " \
-          " ${BLUE}|_ ${NC}${RED}.${NC} iniciado git"  
-          git init > /dev/null
-          echo -e "\n"
-      fi
-fi
-
-
-arquivos=`git status | grep   '[[:alpha:]]\.py\|\.c\|\.sh\|\.java\|\.md\|\.txt|\.cpp'`
-gitignore=`git status | grep    '[\.]gitignore'`
 
 adicionarArquivo(){
+
    git add $1
-  
-   if [ $? -eq 0 ]
-then
-:
-else
-  echo "Não existem arquivos novos!" 
-  exit 1
-  
-fi
-  
-    # if [[  "${rrr}" = *"any"* ]];
-    #   then
-    #   echo "nada bem"
-    #   else
-    #   echo "td bem"
-    # fi
-    #  echo "fatal: pathspec 'new' did not match any file... a"
-     
-    #  git add $1
-    #  git add LICENSE
-    
-    
+   echo -e "${RED}|_${NC}${BLUE}.${NC} Adicionado - Arquivo :  ${RED}$1${NC}"   
    }
+
 solicitar(){
     wget $1  > /dev/null 2>&1
 }
@@ -134,9 +127,7 @@ license(){
 
 function iniciandoTrabalhos(){
   
-  echo -e "\n"
   echo -e "${RED}|_${NC}${BLUE}.${NC}  Adicionar LICENSE sim/nao : "
-  #read -p "|_. Adicionar LICENSE sim/nao : " adicionarlicense 
   read adicionarlicense
  
   if [[ $adicionarlicense == "sim" ]];
@@ -149,109 +140,119 @@ function iniciandoTrabalhos(){
         mv lgpl-3.0.txt LICENSE > /dev/null 2>&1
         mv LICENSE-2.0.txt LICENSE > /dev/null 2>&1
   fi
-  
-  if [[ $gitignore == *"gitignore"  ]];
-  then
-  
-   echo -e "\n-Extenções ignoradas. \n "
-   cat .gitignore
-   
-   echo -e "----------------------\n"
-   
-   
-   else
-      echo -e "\n"
-     read -p "|_ . Usar gitignore: sim ou nao " adicionargitignore
+
+     echo -e "${RED}|_${NC}${BLUE}.${NC}  Criar gitignore: sim ou nao "
+     echo -e "${RED}|_${NC}${BLUE}.${NC} Ao utilizar sera apresentado visualizador less, pressionando a tecla ${RED}v${NC} abrira o editor padrão para acrescentar extensões indesejadas "
+     read adicionargitignore
      if [[ $adicionargitignore == "sim" ]];
       then
-          echo "criado"
+        
           touch .gitignore
-          nano .gitignore
-      fi
-   
+          less .gitignore
    fi
-   echo -e "\n"
-   arquivosPendentes
-   
+     
   for  indice in  $arquivos
-  do
-    
-   #primeira chamada
-   echo -e "${RED}|_${NC}${BLUE}.${NC} Adicionado - Arquivo :  ${RED}$indice${NC}"
-   adicionarArquivo "$indice"
+  do 
+    adicionarArquivo "$indice"
   done
      
  echo -e "${RED}|_${NC}${BLUE}.${NC} ${BOLD}Construir${NBOLD} um repositorio ${BLUE}\033[1m NOVO ${NC} sim ou nao" 
+
  read criado_repositorio
+
  if  test "$criado_repositorio" = "sim" 
         then
-        criar_repositorio_github
-        echo -e "\t${RED}(${NC}${BLUE} \033[1m https://github.com/${USER_NAME}/${NOME_PROJETO}${NC} \033[0m${RED})${NC}"
-        upload
+          criar_repositorio_github
+           echo -e "\t${RED}(${NC}${BLUE} \033[1m https://github.com/${USER_NAME}/${NOME_PROJETO}${NC} \033[0m${RED})${NC}"
+           upload
   else
   echo -e "${RED}|_${NC}${BLUE}.${NC} Usar um  repositorio ${BLUE}\033[1m EXISTENTE ${NC} sim ou nao" 
  read disponivel
+
  if  test "$disponivel" = "sim" 
         then
-        existente_repositorio_github
-        echo -e "\t${RED}(${NC}${BLUE} \033[1m https://github.com/${USER_NAME}/${NOME_PROJETO}${NC} \033[0m${RED})${NC}"
-        upload
+           existente_repositorio_github
+           echo -e "\t${RED}(${NC}${BLUE} \033[1m https://github.com/${USER_NAME}/${NOME_PROJETO}${NC} \033[0m${RED})${NC}"
+           upload
  else  
     echo -e "\t${RED}(${NC}${BLUE} \033[1m TAREFA CONCLUIDA${NC} \033[0m${RED})${NC}"       
    fi
 fi
-
-
-
-        
+       
  }
  
 
 function arquivosPendentes(){
-  
 
-   for  indice in  $arquivos
-    do
-    novo=`git status | grep   $indice| cut -c 12-50`
-    
-    
-    if  test "$indice" = "new"
-     then
-     
-      quantidade_arquivos_novos=`git status | grep   $indice | cut -c 2-4 | wc -l`
-      echo -e "${RED}|_${NC}${BLUE}.${NC} ${RED}${BOLD}ATENÇÃO${NBOLD}${NC} nesse local há  ${RED}$quantidade_arquivos_novos${NC} arquivos esperando continuidade são eles:"
-       echo -e "\n${BLUE}**${NC}${RED}$novo${NC}"
-     echo -e "${RED}|_${NC}${BLUE}.${NC} ${RED}${BOLD}Resetar${NBOLD}${NC} ou continuar sim ou nao :" 
-     read resetar
-     
-      if  test "$resetar" = "sim" #nao ta funcionadno
-
+   a_add=`git status | grep -c  'new'`
+   m_modified=`git status | grep -c  'modified'`
+  if test $a_add  -ge  1 || test $m_modified  -ge  1
         then
-         git restore --staged $novo
-         git  rm --cached $novo
-         git restore $novo
-         
-         #read -p "(ou pressione entender para continuar... ) " removergit          
-       #  git rm --force  $novo ##
-        echo "[ REMOVIDOS ] - Arquivos removidos : $novo" 
-      else
-        adicionarArquivo "$indice"
-      
-   fi
-  break
-  
-  fi  
-done
+        echo -e "${RED}|_${NC}${BLUE}.${NC} ${RED}${BOLD}ATENÇÃO${NBOLD}${NC} nesse local há  ${RED}$a_add${NC} arquivos esperando continuidade" # fazer alguma coisa caso apenas usar 
+
+        if test $m_modified  -ge  1
+          then
+            echo -e "${RED}|_${NC}${BLUE}.${NC} ${RED}${BOLD}ATENÇÃO${NBOLD}${NC} nesse local há  ${RED}$m_modified${NC} modificado\n${RED}|${NC}"
+            echo -e "${RED}|_${NC}${BLUE}.${NC} Adicionar as modificações sim ou nao"
+            read up_arquivo
+            if  test "$up_arquivo" = "sim"
+              then 
+                echo -e "${RED}|_${NC}${BLUE}.${NC} ${RED}${BOLD}[${NBOLD}${NC} ${BLUE}Modified${NC} ${RED}${BOLD}]${NBOLD}${NC}"
+                for  alterado in  $arquivos
+                  do
+                    arq=`git status | grep   $alterado | cut -c 12-50`
+                    if  test "$alterado" = "modified:"
+                      then
+                        echo -e "\n${BLUE}**${NC}${RED}$arq${NC}"
+                    
+                          for mods in $arq
+                            do 
+                              adicionarArquivo "$mods"
+                            upload
+                      
+                          done
+                        break
+                    fi
+              done
+          else
+          echo "tchau"
+          fi
+
+        else
+
+          echo -e "${RED}|_${NC}${BLUE}.${NC} Resetar sim \n${RED}| ${NC}${BOLD}Enter${NBOLD} para continuar"
+          
+          read resetar
+        
+        if  test "$resetar" = "sim"
+          then
+            rm -rf .git
+        else
+        
+          for  c in  $arquivos
+            do
+              ct=`git status | grep   $c| cut -c 12-50`
+              
+              for continue_normalmente in $ct
+                do
+
+                adicionarArquivo "$continue_normalmente"
+                upload
+                
+                done
+              
+                break
+                
+            done
+        fi
 
 
+        fi
+    else
+       echo "nao a nada"
+    fi
 }
 
-
-iniciandoTrabalhos
-
+estado_atual
 
 
-
-    #  fi
-
-     
