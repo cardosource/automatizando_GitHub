@@ -33,6 +33,17 @@ As permissões desta licença copyleft forte estão condicionadas à disponibili
 | ` Uso privado` | | |
 
 
+Licença Apache 2.0   
+
+Uma licença permissiva cujas condições principais requerem a preservação de direitos autorais e avisos de licença. Os contribuidores fornecem uma concessão expressa de direitos de patente. Obras licenciadas, modificações e obras maiores podem ser distribuídas em termos diferentes e sem código-fonte.
+| Permissões | Condições     | Limitações                |
+| :-------- | :------- | :------------------------- |
+| `Uso comercial` | `Licença e aviso de direitos autorais` | **Responsabilidade** |
+| `Distribuição` | `Mudanças de estado` | **Uso de marca registrada** |
+| `Modificação` | |**garantia** |
+| `Uso de patente` | | |
+| `Uso privado` | | |
+
 
 
 instruções de configuração sistemas core linux
