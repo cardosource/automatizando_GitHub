@@ -19,7 +19,8 @@ echo -e  "${RED}|_${NC}${BLUE}......${NC} Distribuição : \033[1m `cat /etc/iss
 echo -e  "${RED}|_${NC}${BLUE}........${NC} Git : \033[0m \033[1m `git --version`\033[0m"
 echo -e "${RED}-${NC}-----------------------------------------"
 echo -e "\n\n"
-printf   "${RED}${BOLD}.${NBOLD}${NC}${BLUE}....${NC}Pressione a tecla  `tput bold` %-50s `tput sgr0`\n" "ENTER"
+printf   "${RED}${BOLD}.${NBOLD}${NC}${BLUE}....${NC}Entre com sua `tput bold` %-50s `tput sgr0`\n" "SENHA"
+eval "$(ssh-agent)" > /dev/null
 ssh-add ~/.ssh/id_rsa
 ssh -T git@github.com
 echo -e "\n"
@@ -146,9 +147,11 @@ function iniciandoTrabalhos(){
      read adicionargitignore
      if [[ $adicionargitignore == "sim" ]];
       then
-        
+          echo "criado"
           touch .gitignore
           less .gitignore
+   
+   
    fi
      
   for  indice in  $arquivos
@@ -218,6 +221,8 @@ function arquivosPendentes(){
           echo "tchau"
           fi
 
+
+
         else
 
           echo -e "${RED}|_${NC}${BLUE}.${NC} Resetar sim \n${RED}| ${NC}${BOLD}Enter${NBOLD} para continuar"
@@ -254,5 +259,3 @@ function arquivosPendentes(){
 }
 
 estado_atual
-
-
