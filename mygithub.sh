@@ -3,9 +3,6 @@
 export USER_NAME="git-cardoso"
 usuario=$USER 
 
-export TOKEN="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"
-#https://github.com/settings/tokens
-
 
 
 RED='\033[0;31m'
@@ -79,6 +76,9 @@ function existente_repositorio_github(){
   
 }
 function criar_repositorio_github(){
+          read -p "Token github :  " TOKEN
+          #https://github.com/settings/tokens
+
   
           echo -e "  ${RED}|_${NC} ${BLUE}.${NC} Escolha o melhor nome :)"
           read -p "Por gentileza escreva o nome que dara ao novo repositorio  : " NOME_PROJETO 
