@@ -14,7 +14,7 @@ Script de automatizando para gnu/linux
 
 instruções de configuração sistemas core linux
 ```bash
-  sudo ln mygithub.sh /usr/local/bin/subirprojeto  
+  sudo ln mygithub.sh /usr/local/bin/github
   
 ```
 
